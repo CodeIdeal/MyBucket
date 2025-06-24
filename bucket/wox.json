@@ -6,7 +6,19 @@
     "url": "https://github.com/Wox-launcher/Wox/releases/download/v2.0.0-beta.3/wox-windows-amd64.exe",
     "hash": "sha256:03d41671e6120a65931cde720b9a7928800f7d3b467e6be667268c5a089cd39d",
     "bin": "wox-windows-amd64.exe",
+    "shortcuts": [
+        [
+            "wox-windows-amd64.exe",
+            "wox"
+        ]
+    ],
     "persist": ".wox",
+    "post_install": [
+        "if (!(Test-Path \"$dir\\.wox\\*\") -and (Test-Path \"$env:UserProfile\\.wox\")) {",
+        "    info '[Portable Mode]: Copying user data...'",
+        "    Copy-Item \"$env:UserProfile\\.wox\\*\" \"$dir\\.wox\" -Recurse",
+        "}"
+    ],
     "checkver": {
         "url": "https://api.github.com/repos/Wox-launcher/Wox/releases/latest",
         "regex": "\"tag_name\": \"(?<versionName>[^\"]*)\"",
